@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Products\Queries\" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.4.1" />
+    <ProjectReference Include="..\BasakSehirBurada.Domain\BasakSehirBurada.Domain.csproj" />
   </ItemGroup>
 
 </Project>
