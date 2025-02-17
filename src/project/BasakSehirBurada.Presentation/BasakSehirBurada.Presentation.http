@@ -1,0 +1,6 @@
+@BasakSehirBurada.Presentation_HostAddress = http://localhost:5225
+
+GET {{BasakSehirBurada.Presentation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
