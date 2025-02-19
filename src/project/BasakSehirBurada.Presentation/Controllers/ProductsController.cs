@@ -1,4 +1,6 @@
 ﻿using BasakSehirBurada.Application.Features.Products.Commands.Create;
+using BasakSehirBurada.Application.Features.Products.Queries.GetById;
+using BasakSehirBurada.Application.Features.Products.Queries.GetDetails;
 using BasakSehirBurada.Application.Features.Products.Queries.GetList;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +27,21 @@ namespace BasakSehirBurada.Presentation.Controllers
 
             var result = await mediator.Send(query);
 
+            return Ok(result);
+        }
+
+
+        [HttpGet("details")]
+        public async Task<IActionResult> GetAllDetails()
+        {
+            var result = await mediator.Send(new GetDetailsProductQuery());
+            return Ok(result);
+        }
+
+        [HttpGet("getbyid")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var result = await mediator.Send(new GetByIdProductQuery() { Id = id});
             return Ok(result);
         }
 
