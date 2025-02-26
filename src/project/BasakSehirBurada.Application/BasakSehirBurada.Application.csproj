@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\cores\Core.Persistence\Core.Persistence.csproj" />
     <ProjectReference Include="..\BasakSehirBurada.Domain\BasakSehirBurada.Domain.csproj" />
-    <ProjectReference Include="..\BasakSehirBurada.Persistence\BasakSehirBurada.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

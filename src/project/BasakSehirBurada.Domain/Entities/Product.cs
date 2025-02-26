@@ -1,6 +1,8 @@
-﻿namespace BasakSehirBurada.Domain.Entities;
+﻿using Core.Persistence.Entities;
 
-public class Product
+namespace BasakSehirBurada.Domain.Entities;
+
+public class Product : Entity<int>
 {
 
     public int Id { get; set; }

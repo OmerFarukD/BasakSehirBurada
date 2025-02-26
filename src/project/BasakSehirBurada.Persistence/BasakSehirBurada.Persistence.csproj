@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BasakSehirBurada.Application\BasakSehirBurada.Application.csproj" />
     <ProjectReference Include="..\BasakSehirBurada.Domain\BasakSehirBurada.Domain.csproj" />
   </ItemGroup>
 

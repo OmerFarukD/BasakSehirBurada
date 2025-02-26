@@ -37,7 +37,9 @@ public abstract class EfRepositoryBase<TEntity, TId, TContext> : IRepository<TEn
         return entity;
     }
 
-    public async Task<IEnumerable<TEntity>> AddRangeAync(IEnumerable<TEntity> entities,CancellationToken cancelationToken=default )
+ 
+
+    public async Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
     {
 
         foreach (TEntity entity in entities)
@@ -45,8 +47,8 @@ public abstract class EfRepositoryBase<TEntity, TId, TContext> : IRepository<TEn
             entity.CreatedTime = DateTime.UtcNow;
 
         }
-        await Context.Set<TEntity>().AddRangeAsync(entities,cancelationToken);
-        await Context.SaveChangesAsync(cancelationToken);
+        await Context.Set<TEntity>().AddRangeAsync(entities, cancellationToken);
+        await Context.SaveChangesAsync(cancellationToken);
 
         return entities;
    
