@@ -15,5 +15,7 @@ public interface IAsyncRepository<TEntity, TId> where TEntity: Entity<TId>
 
     Task<bool> AnyAsync(Expression<Func<TEntity, bool>>? filter = null, bool enableTracking = true, CancellationToken cancellationToken = default);
 
-    Task<IEnumerable<TEntity>> AddRange(IEnumerable<TEntity> entities);
+    Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entities,CancellationToken cancellationToken = default);
+
+
 }
