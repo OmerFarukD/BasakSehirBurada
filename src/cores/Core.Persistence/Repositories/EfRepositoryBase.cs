@@ -109,31 +109,99 @@ public abstract class EfRepositoryBase<TEntity, TId, TContext> : IRepository<TEn
 
     public TEntity? Get(Expression<Func<TEntity, bool>> filter, bool enableTracking = true, bool include = true)
     {
-        
+        IQueryable<TEntity> query = Context.Set<TEntity>();
+
+        if(enableTracking is false)
+        {
+            query = query.AsNoTracking();
+        }
+
+        if(include is false)
+        {
+            query = query.IgnoreAutoIncludes();
+        }
+
+
+        return query.FirstOrDefault(filter);
+
     }
 
     public List<TEntity> GetAll(Expression<Func<TEntity, bool>>? filter = null, bool enableTracking = true, bool include = true)
     {
-        throw new NotImplementedException();
+        IQueryable<TEntity> query = Context.Set<TEntity>();
+
+        if(filter is not null)
+        {
+            query = query.Where(filter);
+        }
+        if (enableTracking is false)
+        {
+            query = query.AsNoTracking();
+        }
+
+        if (include is false)
+        {
+            query = query.IgnoreAutoIncludes();
+        }
+
+        return query.ToList();
+
     }
 
-    public Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? filter = null, bool enableTracking = true, bool include = true, CancellationToken cancellationToken = default)
+    public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? filter = null, bool enableTracking = true, bool include = true, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        IQueryable<TEntity> query = Context.Set<TEntity>();
+
+        if (filter is not null)
+        {
+            query = query.Where(filter);
+        }
+        if (enableTracking is false)
+        {
+            query = query.AsNoTracking();
+        }
+
+        if (include is false)
+        {
+            query = query.IgnoreAutoIncludes();
+        }
+
+        return await query.ToListAsync(cancellationToken);
     }
 
-    public Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> filter, bool enableTracking = true, bool include = true, CancellationToken cancellationToken = default)
+    public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> filter, bool enableTracking = true, bool include = true, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        IQueryable<TEntity> query = Context.Set<TEntity>();
+
+        if (enableTracking is false)
+        {
+            query = query.AsNoTracking();
+        }
+
+        if (include is false)
+        {
+            query = query.IgnoreAutoIncludes();
+        }
+
+
+        return await query.FirstOrDefaultAsync(filter,cancellationToken);
     }
 
     public TEntity Update(TEntity entity)
     {
-        throw new NotImplementedException();
+        entity.UpdateTime = DateTime.UtcNow;
+        Context.Entry(entity).State = EntityState.Modified;
+        Context.SaveChanges();
+
+
+        return entity;
     }
 
-    public Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        entity.UpdateTime = DateTime.UtcNow;
+        Context.Entry(entity).State = EntityState.Modified;
+        await Context.SaveChangesAsync();
+        return entity;
     }
 }
