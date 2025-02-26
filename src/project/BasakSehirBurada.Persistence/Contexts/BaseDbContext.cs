@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BasakSehirBurada.Persistence.Contexts;
 
-public class BaseDbContext : DbContext
+public class     : DbContext
 {
 
 

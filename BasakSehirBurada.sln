@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasakSehirBurada.Persistenc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasakSehirBurada.Application", "src\project\BasakSehirBurada.Application\BasakSehirBurada.Application.csproj", "{CEA913B3-8244-469E-AEF3-92652299C1E3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Persistence", "src\cores\Core.Persistence\Core.Persistence.csproj", "{B7288943-CD5E-4D60-9BD4-55EAA09D4E40}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{CEA913B3-8244-469E-AEF3-92652299C1E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEA913B3-8244-469E-AEF3-92652299C1E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEA913B3-8244-469E-AEF3-92652299C1E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7288943-CD5E-4D60-9BD4-55EAA09D4E40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7288943-CD5E-4D60-9BD4-55EAA09D4E40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7288943-CD5E-4D60-9BD4-55EAA09D4E40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7288943-CD5E-4D60-9BD4-55EAA09D4E40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +56,7 @@ Global
 		{4F59E20A-806C-4D3C-A2E5-24BDE3CD4E14} = {1482DB9A-704A-420E-97DE-5C01F072A51D}
 		{A6C31BDF-5B52-4B58-A39E-C06E7EE86C4C} = {1482DB9A-704A-420E-97DE-5C01F072A51D}
 		{CEA913B3-8244-469E-AEF3-92652299C1E3} = {1482DB9A-704A-420E-97DE-5C01F072A51D}
+		{B7288943-CD5E-4D60-9BD4-55EAA09D4E40} = {E21E11AE-DB25-4F68-86CF-DDFB93A3A4BA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {91B2CB41-DD14-4C22-841A-82B94C8EAE69}

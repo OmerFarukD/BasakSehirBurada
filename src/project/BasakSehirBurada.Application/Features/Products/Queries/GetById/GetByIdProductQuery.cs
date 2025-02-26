@@ -2,9 +2,7 @@
 using BasakSehirBurada.Domain.Entities;
 using BasakSehirBurada.Persistence.Contexts;
 using MediatR;
-
 namespace BasakSehirBurada.Application.Features.Products.Queries.GetById;
-
 public class GetByIdProductQuery  : IRequest<GetByIdProductResponseDto>
 {
     public int Id { get; set; }
