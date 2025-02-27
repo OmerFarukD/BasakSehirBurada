@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using BasakSehirBurada.Application.Services.Repositories;
 using BasakSehirBurada.Domain.Entities;
-using BasakSehirBurada.Persistence.Contexts;
 using MediatR;
 
 namespace BasakSehirBurada.Application.Features.Products.Commands.Create;
@@ -19,21 +19,21 @@ public class ProductAddCommand  : IRequest<string>
     public class ProductAddCommandHandler : IRequestHandler<ProductAddCommand, string>
     {
 
-        private readonly BaseDbContext _context;
+        private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
 
-        public ProductAddCommandHandler(BaseDbContext context, IMapper mapper)
+        public ProductAddCommandHandler(IProductRepository productRepository, IMapper mapper)
         {
-            _context = context;
+            _productRepository = productRepository;
             _mapper = mapper;
         }
+
 
         public async Task<string> Handle(ProductAddCommand request, CancellationToken cancellationToken)
         {
             Product product = _mapper.Map<Product>(request);
 
-            await _context.Products.AddAsync(product);
-            await _context.SaveChangesAsync();
+            await _productRepository.AddAsync(product, cancellationToken);
             return "Ürün Eklendi.";
         }
     }

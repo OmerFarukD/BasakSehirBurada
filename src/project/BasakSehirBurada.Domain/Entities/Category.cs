@@ -1,8 +1,9 @@
-﻿namespace BasakSehirBurada.Domain.Entities
+﻿using Core.Persistence.Entities;
+
+namespace BasakSehirBurada.Domain.Entities
 {
-    public class Category
+    public class Category : Entity<int>
     {
-        public int Id { get; set; }
         public string Name { get; set; }
 
         public List<Product> Products { get; set; } 

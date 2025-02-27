@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using BasakSehirBurada.Persistence.Contexts;
+using BasakSehirBurada.Application.Services.Repositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
 
 namespace BasakSehirBurada.Application.Features.Products.Queries.GetDetails
 {
@@ -14,17 +12,17 @@ namespace BasakSehirBurada.Application.Features.Products.Queries.GetDetails
         public class GetDetailsProductQueryHandler : IRequestHandler<GetDetailsProductQuery, List<GetDetailsProductResponseDto>>
         {
             private readonly IMapper _mapper;
-            private readonly BaseDbContext _context;
+            private readonly IProductRepository _repository;
 
-            public GetDetailsProductQueryHandler(IMapper mapper, BaseDbContext context)
+            public GetDetailsProductQueryHandler(IMapper mapper, IProductRepository repository)
             {
                 _mapper = mapper;
-                _context = context;
+                _repository = repository;
             }
 
             public async Task<List<GetDetailsProductResponseDto>> Handle(GetDetailsProductQuery request, CancellationToken cancellationToken)
             {
-                var products = await _context.Products.Include(x=>x.Category).ToListAsync();
+                var products = await _repository.GetAllAsync(enableTracking:false,cancellationToken:cancellationToken);
 
                 var response = _mapper.Map<List<GetDetailsProductResponseDto>>(products);
 

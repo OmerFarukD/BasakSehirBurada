@@ -1,9 +1,6 @@
-﻿
-
+﻿using BasakSehirBurada.Application.Services.Repositories;
 using BasakSehirBurada.Domain.Entities;
-using BasakSehirBurada.Persistence.Contexts;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace BasakSehirBurada.Application.Features.Categories.Queries.GetList;
 
@@ -13,20 +10,18 @@ public class GetListCategoryQuery : IRequest<List<Category>>
 
     public class GetListCategoryQueryHandler : IRequestHandler<GetListCategoryQuery, List<Category>>
     {
-        private readonly BaseDbContext _context;
 
-        public GetListCategoryQueryHandler(BaseDbContext context)
+        private readonly ICategoryRepository _categoryRepository;
+
+        public GetListCategoryQueryHandler(ICategoryRepository categoryRepository)
         {
-            _context = context;
+            _categoryRepository = categoryRepository;
         }
 
         public async Task<List<Category>> Handle(GetListCategoryQuery request, CancellationToken cancellationToken)
         {
-            List<Category> categories = await _context.Categories.ToListAsync();
-
+            List<Category> categories = await _categoryRepository.GetAllAsync(cancellationToken:cancellationToken);
             return categories;
-
         }
-
     }
 }

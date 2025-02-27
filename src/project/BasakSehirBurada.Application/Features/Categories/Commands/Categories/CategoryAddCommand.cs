@@ -1,5 +1,6 @@
-﻿using BasakSehirBurada.Domain.Entities;
-using BasakSehirBurada.Persistence.Contexts;
+﻿using BasakSehirBurada.Application.Services.Repositories;
+using BasakSehirBurada.Domain.Entities;
+
 using MediatR;
 
 namespace BasakSehirBurada.Application.Features.Categories.Commands.Categories;
@@ -13,11 +14,11 @@ public class CategoryAddCommand : IRequest<Category>
 public class CategoryAddCommandHandler : IRequestHandler<CategoryAddCommand, Category>
 {
 
-    private readonly BaseDbContext _context;
+    private readonly ICategoryRepository _categoryRepository;
 
-    public CategoryAddCommandHandler(BaseDbContext context)
+    public CategoryAddCommandHandler(ICategoryRepository categoryRepository)
     {
-        _context = context;
+        _categoryRepository = categoryRepository;
     }
 
     public async Task<Category> Handle(CategoryAddCommand request, CancellationToken cancellationToken)
@@ -26,8 +27,7 @@ public class CategoryAddCommandHandler : IRequestHandler<CategoryAddCommand, Cat
         {
             Name = request.Name
         };
-        await _context.Categories.AddAsync(category);
-        await _context.SaveChangesAsync();
+        await _categoryRepository.AddAsync(category, cancellationToken);
         return category;
     }
 }

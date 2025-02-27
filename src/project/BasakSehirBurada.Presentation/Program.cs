@@ -1,4 +1,5 @@
 using BasakSehirBurada.Application;
+using BasakSehirBurada.Persistence;
 using BasakSehirBurada.Persistence.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationServices();
 builder.Services.AddDbContext<BaseDbContext>();
-
+builder.Services.AddPersistenceServices();
 
 var app = builder.Build();
 
