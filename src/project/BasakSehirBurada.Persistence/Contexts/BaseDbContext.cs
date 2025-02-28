@@ -1,11 +1,19 @@
 ﻿using BasakSehirBurada.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace BasakSehirBurada.Persistence.Contexts;
 
-public class BaseDbContext : DbContext
+public class BaseDbContext : IdentityDbContext<User,IdentityRole,string>
 {
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
 
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

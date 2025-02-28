@@ -6,9 +6,6 @@ namespace BasakSehirBurada.Application.Features.Products.Queries.GetDetails
 {
    public  class GetDetailsProductQuery : IRequest<List<GetDetailsProductResponseDto>>
     {
-
-
-
         public class GetDetailsProductQueryHandler : IRequestHandler<GetDetailsProductQuery, List<GetDetailsProductResponseDto>>
         {
             private readonly IMapper _mapper;

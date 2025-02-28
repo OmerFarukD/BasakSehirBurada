@@ -1,6 +1,8 @@
 using BasakSehirBurada.Application;
+using BasakSehirBurada.Domain.Entities;
 using BasakSehirBurada.Persistence;
 using BasakSehirBurada.Persistence.Contexts;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationServices();
 builder.Services.AddDbContext<BaseDbContext>();
 builder.Services.AddPersistenceServices();
+
+builder.Services.AddIdentity<User, IdentityRole>(opt =>
+{
+    opt.User.RequireUniqueEmail = true;
+    opt.Password.RequireNonAlphanumeric = false;
+    opt.Password.RequiredLength = 6;
+}).AddEntityFrameworkStores<BaseDbContext>();
+
 
 var app = builder.Build();
 
