@@ -1,8 +1,9 @@
 ﻿using BasakSehirBurada.Domain.Entities;
+using Core.CrossCuttingConcerns.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace BasakSehirBurada.Application.Features.Authentication.Register;
+namespace BasakSehirBurada.Application.Features.Authentication.Register.Commands;
 
 public class RegisterCommand : IRequest<string>
 {
@@ -18,7 +19,7 @@ public class RegisterCommand : IRequest<string>
 
 
 
-
+    // Aynı email e sahip bir kullanıcı ve mı yok mu 
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, string>
     {
 
@@ -37,6 +38,14 @@ public class RegisterCommand : IRequest<string>
                 UserName = request.UserName,
                 Email = request.Email,
             };
+
+            var emailUserCheck = await _userManager.FindByEmailAsync(request.Email);
+
+            if(emailUserCheck is not null)
+            {
+                throw new BusinessException("Kullanıcı Emaili benzersiz olmalıdır.");
+            }
+
 
 
             IdentityResult result = await _userManager.CreateAsync(user,request.Password);

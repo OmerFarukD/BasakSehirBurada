@@ -1,4 +1,5 @@
-﻿using BasakSehirBurada.Application.Features.Authentication.Register;
+﻿using BasakSehirBurada.Application.Features.Authentication.Login.Commands;
+using BasakSehirBurada.Application.Features.Authentication.Register.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,16 @@ public class AuthController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> Register(RegisterCommand command)
     {
         var response = await mediator.Send(command);
+        return Ok(response);
+    }
+
+
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginCommand command)
+    {
+        var response = await mediator.Send(command);
+
         return Ok(response);
     }
 
