@@ -1,11 +1,12 @@
-﻿using BasakSehirBurada.Domain.Entities;
+﻿using BasakSehirBurada.Application.Services.JwtServices;
+using BasakSehirBurada.Domain.Entities;
 using Core.CrossCuttingConcerns.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
 namespace BasakSehirBurada.Application.Features.Authentication.Login.Commands;
 
-public class LoginCommand : IRequest<string>
+public class LoginCommand : IRequest<AccessTokenDto>
 {
 
     public string Email { get; set; }
@@ -14,18 +15,19 @@ public class LoginCommand : IRequest<string>
 
 
 
-    public class LoginCommandHandler : IRequestHandler<LoginCommand, string>
+    public class LoginCommandHandler : IRequestHandler<LoginCommand, AccessTokenDto>
     {
 
         private readonly UserManager<User> _userManager;
+        private readonly IJwtService _jwtService;
 
-        public LoginCommandHandler(UserManager<User> userManager)
+        public LoginCommandHandler(UserManager<User> userManager, IJwtService jwtService)
         {
             _userManager = userManager;
+            _jwtService = jwtService;
         }
 
-
-        public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
+        public async Task<AccessTokenDto> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
 
             var emailUser = await _userManager.FindByEmailAsync(request.Email);
@@ -44,7 +46,10 @@ public class LoginCommand : IRequest<string>
             }
 
 
-            return "Giriş Başarıllıdır.";
+            AccessTokenDto token = await _jwtService.CreateTokenAsync(emailUser);
+
+
+            return token;
         
         }
     }

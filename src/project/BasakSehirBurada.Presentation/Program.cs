@@ -1,4 +1,5 @@
 using BasakSehirBurada.Application;
+using BasakSehirBurada.Application.Services.JwtServices;
 using BasakSehirBurada.Domain.Entities;
 using BasakSehirBurada.Persistence;
 using BasakSehirBurada.Persistence.Contexts;
@@ -13,8 +14,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationServices();
-builder.Services.AddDbContext<BaseDbContext>();
-builder.Services.AddPersistenceServices();
+builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.Configure<CustomTokenOptions>(builder.Configuration.GetSection("TokenOptions"));
+
 
 builder.Services.AddIdentity<User, IdentityRole>(opt =>
 {

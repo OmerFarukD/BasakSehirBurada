@@ -1,11 +1,12 @@
-﻿using BasakSehirBurada.Domain.Entities;
+﻿using BasakSehirBurada.Application.Services.JwtServices;
+using BasakSehirBurada.Domain.Entities;
 using Core.CrossCuttingConcerns.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
 namespace BasakSehirBurada.Application.Features.Authentication.Register.Commands;
 
-public class RegisterCommand : IRequest<string>
+public class RegisterCommand : IRequest<AccessTokenDto>
 {
 
     public string UserName { get; set; }
@@ -20,17 +21,19 @@ public class RegisterCommand : IRequest<string>
 
 
     // Aynı email e sahip bir kullanıcı ve mı yok mu 
-    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, string>
+    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, AccessTokenDto>
     {
 
         private readonly UserManager<User> _userManager;
+        private readonly IJwtService _jwtService;
 
-        public RegisterCommandHandler(UserManager<User> userManager)
+        public RegisterCommandHandler(UserManager<User> userManager, IJwtService jwtService)
         {
             _userManager = userManager;
+            _jwtService = jwtService;
         }
 
-        public async Task<string> Handle(RegisterCommand request, CancellationToken cancellationToken)
+        public async Task<AccessTokenDto> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             User user = new User()
             {
@@ -50,13 +53,20 @@ public class RegisterCommand : IRequest<string>
 
             IdentityResult result = await _userManager.CreateAsync(user,request.Password);
 
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                return "Kayıt başarılı.";
+                var errors = result.Errors.Select(x => x.Description).ToList();
+                throw new AuthorizationException(errors);
             }
 
 
-            return "Hata var";
+            AccessTokenDto token = await _jwtService.CreateTokenAsync(emailUserCheck);
+
+
+            return token;
+
+
+           
         }
     }
 

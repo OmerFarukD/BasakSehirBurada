@@ -8,6 +8,13 @@ namespace BasakSehirBurada.Persistence.Contexts;
 
 public class BaseDbContext : IdentityDbContext<User,IdentityRole,string>
 {
+
+
+    public BaseDbContext(DbContextOptions options): base(options)
+    {
+        
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
@@ -16,10 +23,7 @@ public class BaseDbContext : IdentityDbContext<User,IdentityRole,string>
     }
 
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer(@"server = (localdb)\MSSQLLocalDB; Database=Stok_takip_db; Trusted_Connection=true");
-    }
+  
     public DbSet<Product> Products { get; set; }
     public DbSet<Category> Categories { get; set; }
 }
