@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BasakSehirBurada.Application.Services.RedisServices;
 using BasakSehirBurada.Application.Services.Repositories;
 using BasakSehirBurada.Domain.Entities;
 using MediatR;
@@ -21,19 +22,23 @@ public class ProductAddCommand  : IRequest<string>
 
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
+        private readonly IRedisService _redisService;
 
-        public ProductAddCommandHandler(IProductRepository productRepository, IMapper mapper)
+        public ProductAddCommandHandler(IProductRepository productRepository, IMapper mapper, IRedisService redisService)
         {
             _productRepository = productRepository;
             _mapper = mapper;
+            _redisService = redisService;
         }
-
 
         public async Task<string> Handle(ProductAddCommand request, CancellationToken cancellationToken)
         {
             Product product = _mapper.Map<Product>(request);
 
             await _productRepository.AddAsync(product, cancellationToken);
+
+            await _redisService.RemoveDataAsync("products");
+
             return "Ürün Eklendi.";
         }
     }

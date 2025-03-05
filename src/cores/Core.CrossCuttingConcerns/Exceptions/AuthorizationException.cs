@@ -11,6 +11,8 @@ public class AuthorizationException : Exception
     }
 
 
+
+
     public AuthorizationException(List<string> errors)
     {
         Errors = errors;

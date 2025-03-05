@@ -17,6 +17,13 @@ builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.Configure<CustomTokenOptions>(builder.Configuration.GetSection("TokenOptions"));
 
+builder.Services.AddStackExchangeRedisCache(opt =>
+{
+    opt.Configuration = "localhost:6379";
+    opt.InstanceName = "BASAKSEHIR_CACHE";
+});
+
+
 
 builder.Services.AddIdentity<User, IdentityRole>(opt =>
 {
