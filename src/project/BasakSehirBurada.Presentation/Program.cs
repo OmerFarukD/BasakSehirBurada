@@ -3,6 +3,7 @@ using BasakSehirBurada.Application.Services.JwtServices;
 using BasakSehirBurada.Domain.Entities;
 using BasakSehirBurada.Persistence;
 using BasakSehirBurada.Persistence.Contexts;
+using BasakSehirBurada.Presentation.Middlewares;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,9 @@ builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.Configure<CustomTokenOptions>(builder.Configuration.GetSection("TokenOptions"));
 
+
+// 
+builder.Services.AddExceptionHandler<HttpExceptionHandler>();
 builder.Services.AddStackExchangeRedisCache(opt =>
 {
     opt.Configuration = "localhost:6379";
@@ -45,6 +49,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+
+app.UseExceptionHandler(_ => { });
 
 app.MapControllers();
 

@@ -38,7 +38,7 @@ public class GetListProductQuery : IRequest<List<GetListProductResponseDto>>
 
             var responses = _mapper.Map<List<GetListProductResponseDto>>(products);
 
-            await _redisService.AddDataAsync($"products({request.Index}, {request.Size})",responses,"products_group");
+            await _redisService.AddDataAsync($"products({request.Index}, {request.Size})",responses);
 
             return responses;
 

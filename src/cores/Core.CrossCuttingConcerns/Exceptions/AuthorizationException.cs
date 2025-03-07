@@ -13,9 +13,19 @@ public class AuthorizationException : Exception
 
 
 
-    public AuthorizationException(List<string> errors)
+    public AuthorizationException(List<string> errors) : base(BuildErrorMessgae(errors))
     {
         Errors = errors;
+    }
+
+
+
+    private static string BuildErrorMessgae(List<string> errors)
+    {
+
+
+        return string.Join("\n",errors);
+
     }
 
 }
