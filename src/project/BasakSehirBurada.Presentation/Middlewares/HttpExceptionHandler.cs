@@ -1,9 +1,7 @@
-﻿
-using Core.CrossCuttingConcerns.Exceptions;
+﻿using Core.CrossCuttingConcerns.Exceptions;
 using Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Text.Json;
-
 namespace BasakSehirBurada.Presentation.Middlewares;
 
 public class HttpExceptionHandler : IExceptionHandler
@@ -51,8 +49,6 @@ public class HttpExceptionHandler : IExceptionHandler
             return false;
         }
 
-
-        
 
         return true;
     }

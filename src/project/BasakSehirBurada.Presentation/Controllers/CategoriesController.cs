@@ -1,6 +1,7 @@
 ﻿using BasakSehirBurada.Application.Features.Categories.Commands.Categories;
 using BasakSehirBurada.Application.Features.Categories.Queries.GetList;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,9 +13,13 @@ namespace BasakSehirBurada.Presentation.Controllers
     {
 
         [HttpPost]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> Add(CategoryAddCommand command)
         {
             var result = await mediator.Send(command);
+
+
+            var claims = HttpContext.User.Claims;
 
             return Ok(result);
         }
