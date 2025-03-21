@@ -30,6 +30,7 @@ public class JwtService : IJwtService
 
         JwtSecurityToken jwt = new JwtSecurityToken(
             issuer: _customTokenOptions.Issuer,
+            audience: _customTokenOptions.Audience[0],
             expires: accessTokenExpiration,
             signingCredentials: signingCredentials,
             claims: await GetClaims(user)

@@ -3,6 +3,7 @@ using BasakSehirBurada.Application.Features.Authentication.Register.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BasakSehirBurada.Presentation.Controllers;
 
@@ -27,6 +28,19 @@ public class AuthController(IMediator mediator) : ControllerBase
         var response = await mediator.Send(command);
 
         return Ok(response);
+    }
+
+    [HttpGet("current")]
+    public IActionResult GetCurrentUser()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        var roles = HttpContext.User.Claims
+            .Where(x => x.Type == ClaimTypes.Role)
+            .Select(x => x.Value)
+            .ToList();
+
+        return Ok(new { Id = userId, Roles = roles });
     }
 
 }

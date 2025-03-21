@@ -19,4 +19,9 @@
     <ProjectReference Include="..\BasakSehirBurada.Domain\BasakSehirBurada.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Roles\Rules\" />
+    <Folder Include="Features\Roles\Profiles\" />
+  </ItemGroup>
+
 </Project>
