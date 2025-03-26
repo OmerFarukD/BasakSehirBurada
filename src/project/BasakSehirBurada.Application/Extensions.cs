@@ -2,6 +2,7 @@
 using BasakSehirBurada.Application.Services.RedisServices;
 using Core.Application.Pipelines.Authorization;
 using Core.Application.Pipelines.Performance;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -15,6 +16,7 @@ public static class Extensions
 
         services.AddScoped<IRedisService,RedisCacheService>();
 
+        services.AddValidatorsFromAssemblies([Assembly.GetExecutingAssembly()]);
         services.AddScoped<IJwtService, JwtService>();
 
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
