@@ -1,13 +1,12 @@
 ﻿using BasakSehirBurada.Application.Services.Repositories;
 using BasakSehirBurada.Domain.Entities;
+using Core.Application.Pipelines.Performance;
 using MediatR;
 
 namespace BasakSehirBurada.Application.Features.Categories.Queries.GetList;
 
-public class GetListCategoryQuery : IRequest<List<Category>>
+public class GetListCategoryQuery : IRequest<List<Category>> ,IPerformanceRequest
 {
-
-
     public class GetListCategoryQueryHandler : IRequestHandler<GetListCategoryQuery, List<Category>>
     {
 
