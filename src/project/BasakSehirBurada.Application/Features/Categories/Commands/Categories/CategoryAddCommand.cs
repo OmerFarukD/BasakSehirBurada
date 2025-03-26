@@ -1,13 +1,15 @@
 ﻿using BasakSehirBurada.Application.Services.Repositories;
 using BasakSehirBurada.Domain.Entities;
-
+using Core.Application.Pipelines.Authorization;
 using MediatR;
 
 namespace BasakSehirBurada.Application.Features.Categories.Commands.Categories;
 
-public class CategoryAddCommand : IRequest<Category>
+public class CategoryAddCommand : IRequest<Category>, IRoleExists
 {
     public string Name { get; set; }
+
+    public string[] Roles => ["User"];
 }
 
 

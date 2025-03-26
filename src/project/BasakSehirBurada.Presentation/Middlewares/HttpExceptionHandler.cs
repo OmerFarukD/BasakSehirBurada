@@ -40,7 +40,7 @@ public class HttpExceptionHandler : IExceptionHandler
         if(exception is AuthorizationException authorization)
         {
 
-            httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+            httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
             AuthorizationProblemDetails problemDetails = new AuthorizationProblemDetails(authorization.Errors);
             string json = JsonSerializer.Serialize(problemDetails);
 

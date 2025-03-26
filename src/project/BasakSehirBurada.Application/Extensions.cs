@@ -1,5 +1,6 @@
 ﻿using BasakSehirBurada.Application.Services.JwtServices;
 using BasakSehirBurada.Application.Services.RedisServices;
+using Core.Application.Pipelines.Authorization;
 using Core.Application.Pipelines.Performance;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -23,6 +24,7 @@ public static class Extensions
             opt.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
 
             opt.AddOpenBehavior(typeof(PerformancePipeline<,>));
+            opt.AddOpenBehavior(typeof(AuthorizationPipeline<,>));
         });
         return services;
     }

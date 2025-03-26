@@ -13,7 +13,7 @@ namespace BasakSehirBurada.Presentation.Controllers
     {
 
         [HttpPost]
-        [Authorize(Roles ="Admin")]
+ 
         public async Task<IActionResult> Add(CategoryAddCommand command)
         {
             var result = await mediator.Send(command);

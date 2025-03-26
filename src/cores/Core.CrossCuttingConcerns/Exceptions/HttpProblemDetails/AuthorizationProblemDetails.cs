@@ -17,7 +17,7 @@ public class AuthorizationProblemDetails : ProblemDetails
     public AuthorizationProblemDetails(string message)
     {
         Title = "Authorization";
-        Status = StatusCodes.Status400BadRequest;
+        Status = StatusCodes.Status401Unauthorized;
         Type = nameof(AuthorizationException);
         Detail = message;
     }
