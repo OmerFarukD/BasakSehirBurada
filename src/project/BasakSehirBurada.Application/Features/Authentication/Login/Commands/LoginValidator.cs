@@ -16,10 +16,7 @@ namespace BasakSehirBurada.Application.Features.Authentication.Login.Commands
         public LoginValidator()
         {
             RuleFor(x => x.Email).NotEmpty().WithMessage("Email alanı boş olamaz.")
-              
                 .Must(x => EmailFormat(x)).WithMessage("Email Formatında Değil");
-
-
             RuleFor(x => x.Password).NotEmpty().WithMessage("Parola alanı Boş olamaz")
                 .MinimumLength(6).WithMessage("Parola alanı minimum 6 haneli olmalıdır.");
         }

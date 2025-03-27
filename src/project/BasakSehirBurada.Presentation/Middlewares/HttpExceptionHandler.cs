@@ -1,6 +1,7 @@
 ﻿using Core.CrossCuttingConcerns.Exceptions;
 using Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 namespace BasakSehirBurada.Presentation.Middlewares;
 
@@ -43,6 +44,17 @@ public class HttpExceptionHandler : IExceptionHandler
             httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
             AuthorizationProblemDetails problemDetails = new AuthorizationProblemDetails(authorization.Errors);
             string json = JsonSerializer.Serialize(problemDetails);
+
+            await httpContext.Response.WriteAsync(json);
+
+            return false;
+        }
+
+        if(exception is FluentValidationException fluentValidation)
+        {
+            httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+            Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails.ValidationProblemDetails details = new(fluentValidation.Errors);
+            string json = JsonSerializer.Serialize(details);
 
             await httpContext.Response.WriteAsync(json);
 

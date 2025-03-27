@@ -12,9 +12,13 @@ namespace BasakSehirBurada.Presentation.Controllers
     public class CategoriesController(IMediator mediator) : ControllerBase
     {
 
+
+        // Attribute
+
         [HttpPost]
  
-        public async Task<IActionResult> Add(CategoryAddCommand command)
+
+       public async Task<IActionResult> Add(CategoryAddCommand command)
         {
             var result = await mediator.Send(command);
 

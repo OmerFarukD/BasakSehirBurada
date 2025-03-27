@@ -1,15 +1,14 @@
 ﻿using BasakSehirBurada.Application.Services.Repositories;
 using BasakSehirBurada.Domain.Entities;
 using Core.Application.Pipelines.Authorization;
+using Core.Application.Pipelines.Loging;
 using MediatR;
 
 namespace BasakSehirBurada.Application.Features.Categories.Commands.Categories;
 
-public class CategoryAddCommand : IRequest<Category>, IRoleExists
+public class CategoryAddCommand : IRequest<Category>, ILoggableRequest
 {
     public string Name { get; set; }
-
-    public string[] Roles => ["User"];
 }
 
 
