@@ -1,6 +1,7 @@
 ﻿using BasakSehirBurada.Application.Services.JwtServices;
 using BasakSehirBurada.Application.Services.RedisServices;
 using Core.Application.Pipelines.Authorization;
+using Core.Application.Pipelines.Caching;
 using Core.Application.Pipelines.Loging;
 using Core.Application.Pipelines.Performance;
 using Core.Application.Pipelines.Validation;
@@ -18,7 +19,7 @@ public static class Extensions
     {
 
         services.AddScoped<IRedisService,RedisCacheService>();
-        services.AddTransient<LoggerServiceBase, FileLogger>();
+        services.AddTransient<LoggerServiceBase, MsSqlLogger>();
         services.AddValidatorsFromAssemblies([Assembly.GetExecutingAssembly()]);
         services.AddScoped<IJwtService, JwtService>();
 
@@ -32,6 +33,7 @@ public static class Extensions
             opt.AddOpenBehavior(typeof(AuthorizationPipeline<,>));
             opt.AddOpenBehavior(typeof(ValidationPipeline<,>));
             opt.AddOpenBehavior(typeof(LogingPipeline<,>));
+            opt.AddOpenBehavior(typeof(CacheRemovePipeline<,>);
         });
         return services;
     }

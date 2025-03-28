@@ -3,8 +3,9 @@ using Core.CrossCuttingConcerns.Logger.Serilog;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
-
 namespace Core.Application.Pipelines.Loging;
+
+
 
 public class LogingPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>, ILoggableRequest
@@ -25,13 +26,16 @@ public class LogingPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, T
             new LogParameter(){ Type = request.GetType().Name, Value = request}
         };
 
+        var userInFo = _httpContextAccessor.HttpContext.User?.Claims?.FirstOrDefault(x=>x.Type== "Email").Value ?? "?";
+
 
         LogDetail logDetail = new LogDetail()
         {
             MethodName = next.Method.Name,
             Parameters = parameters,
-            User = _httpContextAccessor.HttpContext.User.Identity.Name ?? "?"
+            User = userInFo
         };
+  
 
         string message = JsonSerializer.Serialize(logDetail);
         _logger.Info(message);

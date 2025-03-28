@@ -1,14 +1,24 @@
 ﻿using BasakSehirBurada.Application.Services.Repositories;
 using BasakSehirBurada.Domain.Entities;
 using Core.Application.Pipelines.Authorization;
+using Core.Application.Pipelines.Caching;
 using Core.Application.Pipelines.Loging;
 using MediatR;
 
 namespace BasakSehirBurada.Application.Features.Categories.Commands.Categories;
 
-public class CategoryAddCommand : IRequest<Category>, ILoggableRequest
+public class CategoryAddCommand : IRequest<Category>, ILoggableRequest, ICacheRemoverRequest,
+    IRoleExists
 {
     public string Name { get; set; }
+
+    public string[] Roles => ["Admin"];
+
+    public string? CacheKey => null;
+
+    public bool ByPassCache => false;
+
+    public string? CacheGroupKey => "Categories";
 }
 
 

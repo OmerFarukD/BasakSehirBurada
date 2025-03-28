@@ -2,11 +2,10 @@
 using BasakSehirBurada.Application.Services.RedisServices;
 using BasakSehirBurada.Application.Services.Repositories;
 using BasakSehirBurada.Domain.Entities;
+using Core.Application.Pipelines.Caching;
 using MediatR;
-
 namespace BasakSehirBurada.Application.Features.Products.Commands.Create;
-
-public class ProductAddCommand  : IRequest<string>
+public class ProductAddCommand  : IRequest<string>, ICacheRemoverRequest
 {
     public string Name { get; set; }
 
@@ -16,6 +15,11 @@ public class ProductAddCommand  : IRequest<string>
 
     public int CategoryId { get; set; }
 
+    public string? CacheKey => null;
+
+    public bool ByPassCache => false;
+
+    public string? CacheGroupKey => "Products";
 
     public class ProductAddCommandHandler : IRequestHandler<ProductAddCommand, string>
     {
@@ -38,6 +42,7 @@ public class ProductAddCommand  : IRequest<string>
             await _productRepository.AddAsync(product, cancellationToken);
 
             await _redisService.RemoveDataAsync("products");
+
 
             return "Ürün Eklendi.";
         }
