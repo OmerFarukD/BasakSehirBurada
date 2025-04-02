@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BasakSehirBurada.Application.Features.Products.Constants;
 using BasakSehirBurada.Application.Services.RedisServices;
 using BasakSehirBurada.Application.Services.Repositories;
 using BasakSehirBurada.Domain.Entities;
@@ -15,11 +16,11 @@ public class ProductAddCommand  : IRequest<string>, ICacheRemoverRequest
 
     public int CategoryId { get; set; }
 
-    public string? CacheKey => null;
+    public string? CacheKey => "GetProductLİst";
 
     public bool ByPassCache => false;
 
-    public string? CacheGroupKey => "Products";
+    public string? CacheGroupKey => ProductConstants.ProductsCacheGroup;
 
     public class ProductAddCommandHandler : IRequestHandler<ProductAddCommand, string>
     {

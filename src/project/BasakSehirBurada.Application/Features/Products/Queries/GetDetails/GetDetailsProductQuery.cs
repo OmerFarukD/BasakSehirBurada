@@ -1,11 +1,22 @@
 ﻿using AutoMapper;
+using BasakSehirBurada.Application.Features.Products.Constants;
 using BasakSehirBurada.Application.Services.Repositories;
+using Core.Application.Pipelines.Caching;
 using MediatR;
 
 namespace BasakSehirBurada.Application.Features.Products.Queries.GetDetails
 {
-   public  class GetDetailsProductQuery : IRequest<List<GetDetailsProductResponseDto>>
+   public  class GetDetailsProductQuery : IRequest<List<GetDetailsProductResponseDto>>, ICachableRequest
+
     {
+        public string? CacheKey => "GetProductDetails";
+
+        public bool ByPassCache => false;
+
+        public string? CacheGroupKey => ProductConstants.ProductsCacheGroup;
+
+        public TimeSpan? SlidingExpiration => null;
+
         public class GetDetailsProductQueryHandler : IRequestHandler<GetDetailsProductQuery, List<GetDetailsProductResponseDto>>
         {
             private readonly IMapper _mapper;

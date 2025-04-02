@@ -4,6 +4,7 @@ using BasakSehirBurada.Application.Features.Products.Queries.GetDetails;
 using BasakSehirBurada.Application.Features.Products.Queries.GetList;
 using BasakSehirBurada.Application.Features.Products.Queries.GetListNameContains;
 using BasakSehirBurada.Application.Features.Products.Queries.GetlistPriceRange;
+using Bogus;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -69,6 +70,26 @@ public class ProductsController(IMediator mediator) : ControllerBase
         GetListProductNameContainsQuery query = new() { Text = text };
 
         var response = await mediator.Send(query);
+
+        return Ok(response);
+    }
+
+
+    [HttpPost("generate")]
+    public async  Task<IActionResult> GenerateData()
+    {
+        var command = new Faker<ProductAddCommand>()
+            .RuleFor(c => c.Name, (f, c) => f.Commerce.ProductName())
+            .RuleFor(c => c.CategoryId, (f, c) => f.Random.Number(1, 7))
+            .RuleFor(c => c.Price, (f, c) => f.Random.Number(0, 3500))
+            .RuleFor(c => c.Stock, (f, c) => f.Random.Number(0, 350));
+
+
+        var response = command.Generate(5);
+        foreach (var res in response)
+        {
+            await mediator.Send(res);
+        }
 
         return Ok(response);
     }

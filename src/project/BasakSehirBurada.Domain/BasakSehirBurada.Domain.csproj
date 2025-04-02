@@ -14,4 +14,8 @@
     <ProjectReference Include="..\..\cores\Core.Persistence\Core.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
 </Project>

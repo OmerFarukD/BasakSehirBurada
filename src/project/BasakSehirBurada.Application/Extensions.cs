@@ -33,7 +33,9 @@ public static class Extensions
             opt.AddOpenBehavior(typeof(AuthorizationPipeline<,>));
             opt.AddOpenBehavior(typeof(ValidationPipeline<,>));
             opt.AddOpenBehavior(typeof(LogingPipeline<,>));
-            opt.AddOpenBehavior(typeof(CacheRemovePipeline<,>);
+            opt.AddOpenBehavior(typeof(CacheRemovePipeline<,>));
+            opt.AddOpenBehavior(typeof(AddCachePipeline<,>));
+
         });
         return services;
     }

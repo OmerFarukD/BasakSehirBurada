@@ -1,14 +1,23 @@
 ﻿using AutoMapper;
+using BasakSehirBurada.Application.Features.Products.Constants;
 using BasakSehirBurada.Application.Services.Repositories;
 using BasakSehirBurada.Domain.Entities;
+using Core.Application.Pipelines.Caching;
 using MediatR;
 
 namespace BasakSehirBurada.Application.Features.Products.Queries.GetListNameContains;
 
-public class GetListProductNameContainsQuery : IRequest<List<GetListProductNameResponseDto>>
+public class GetListProductNameContainsQuery : IRequest<List<GetListProductNameResponseDto>>, ICachableRequest
 {
     public string Text { get; set; }
 
+    public string? CacheKey => $"GetListProductNameContains({Text})";
+
+    public bool ByPassCache => false;
+
+    public string? CacheGroupKey => ProductConstants.ProductsCacheGroup;
+
+    public TimeSpan? SlidingExpiration => null;
 
     public class GetListProductNameContainsQueryHandler : IRequestHandler<GetListProductNameContainsQuery, List<GetListProductNameResponseDto>>
     {
