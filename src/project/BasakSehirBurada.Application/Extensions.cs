@@ -4,6 +4,7 @@ using Core.Application.Pipelines.Authorization;
 using Core.Application.Pipelines.Caching;
 using Core.Application.Pipelines.Loging;
 using Core.Application.Pipelines.Performance;
+using Core.Application.Pipelines.Transactional;
 using Core.Application.Pipelines.Validation;
 using Core.CrossCuttingConcerns.Logger.Serilog;
 using FluentValidation;
@@ -35,6 +36,7 @@ public static class Extensions
             opt.AddOpenBehavior(typeof(LogingPipeline<,>));
             opt.AddOpenBehavior(typeof(CacheRemovePipeline<,>));
             opt.AddOpenBehavior(typeof(AddCachePipeline<,>));
+            opt.AddOpenBehavior(typeof(TransactionalPipeline<,>));
 
         });
         return services;

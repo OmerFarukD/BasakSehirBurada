@@ -4,9 +4,10 @@ using BasakSehirBurada.Application.Services.RedisServices;
 using BasakSehirBurada.Application.Services.Repositories;
 using BasakSehirBurada.Domain.Entities;
 using Core.Application.Pipelines.Caching;
+using Core.Application.Pipelines.Transactional;
 using MediatR;
 namespace BasakSehirBurada.Application.Features.Products.Commands.Create;
-public class ProductAddCommand  : IRequest<string>, ICacheRemoverRequest
+public class ProductAddCommand  : IRequest<string>, ICacheRemoverRequest, ITransactionalRequest
 {
     public string Name { get; set; }
 
